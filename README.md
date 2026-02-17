@@ -1,5 +1,28 @@
-# Firebase Studio
+# 🚀 StudyAI
 
-This is a NextJS starter in Firebase Studio.
+StudyAI is a smart AI-powered study assistant built using Next.js and Firebase.  
+It helps students organize learning, improve productivity, and enhance understanding using modern web technologies.
 
-To get started, take a look at src/app/page.tsx.
+---
+
+## 🛠️ Tech Stack
+
+- ⚡ Next.js
+- 🎨 Tailwind CSS
+- 🔥 Firebase (Authentication / Database / Hosting)
+- 🧠 AI Integration (if applicable)
+
+---
+
+## ✨ Features
+
+- 🔐 User Authentication (Firebase Auth)
+- 📚 Smart Study Assistance
+- 📝 Interactive UI
+- ⚡ Fast & Responsive Design
+- ☁️ Cloud-based backend
+
+---
+
+## 📂 Project Structure
+
