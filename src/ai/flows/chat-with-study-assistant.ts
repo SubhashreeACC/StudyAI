@@ -1,36 +1,25 @@
 'use server';
+
 /**
- * @fileOverview A Genkit flow for an AI study assistant chat. Allows users to chat with the AI and get study help.
- *
- * - chatWithStudyAssistant - A function that handles the AI chat interaction.
- * - ChatWithStudyAssistantInput - The input type for the chatWithStudyAssistant function.
- * - ChatWithStudyAssistantOutput - The return type for the chatWithStudyAssistant function.
+ * AI Study Assistant Chat Flow
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
-import {Part} from '@genkit-ai/ai';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const ChatWithStudyAssistantInputSchema = z.object({
-  userId: z.string().describe('The ID of the user initiating the chat.'),
-  message: z.string().describe('The current message from the user.'),
-  history: z
-    .array(
-      z.object({
-        role: z.enum(['user', 'model']),
-        parts: z.array(z.object({text: z.string()})),
-      })
-    )
-    .optional()
-    .describe('Previous chat messages to provide context to the AI.'),
+  userId: z.string(),
+  message: z.string(),
 });
+
 export type ChatWithStudyAssistantInput = z.infer<
   typeof ChatWithStudyAssistantInputSchema
 >;
 
 const ChatWithStudyAssistantOutputSchema = z.object({
-  response: z.string().describe("The AI assistant's response to the user's message."),
+  response: z.string(),
 });
+
 export type ChatWithStudyAssistantOutput = z.infer<
   typeof ChatWithStudyAssistantOutputSchema
 >;
@@ -47,37 +36,20 @@ const chatWithStudyAssistantFlow = ai.defineFlow(
     inputSchema: ChatWithStudyAssistantInputSchema,
     outputSchema: ChatWithStudyAssistantOutputSchema,
   },
-  async input => {
-    const {message, history} = input;
+  async (input) => {
+    const { message } = input;
 
-    const promptParts: Part[] = [];
-
-    if (history) {
-      history.forEach(chatTurn => {
-        promptParts.push(chatTurn);
-      });
-    }
-
-    promptParts.push({role: 'user', parts: [{text: message}]});
-
-    const {text} = await ai.generate({
+    const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: promptParts,
-      config: {
-        // Configure safety settings if needed, for example:
-        // safetySettings: [
-        //   {
-        //     category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-        //     threshold: 'BLOCK_NONE',
-        //   },
-        // ],
-      },
+      prompt: message, // ✅ simple string, NOT Part[]
     });
 
-    if (!text) {
+    if (!response.text) {
       throw new Error('AI did not return a response.');
     }
 
-    return {response: text};
+    return {
+      response: response.text,
+    };
   }
 );
