@@ -9,8 +9,7 @@ It helps students organize learning, improve productivity, and enhance understan
 
 - ⚡ Next.js
 - 🎨 Tailwind CSS
-- 🔥 Firebase (Authentication / Database / Hosting)
-- 🧠 AI Integration (if applicable)
+- 🧠 AI Integration 
 
 ---
 
