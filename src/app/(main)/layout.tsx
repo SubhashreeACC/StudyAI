@@ -50,12 +50,12 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <SidebarMenu>
             {menuItems.map(({ href, label, icon: Icon }) => (
               <SidebarMenuItem key={href}>
-                <Link href={href} legacyBehavior passHref>
-                  <SidebarMenuButton isActive={pathname.startsWith(href)} tooltip={label}>
+                <SidebarMenuButton asChild isActive={pathname.startsWith(href)} tooltip={label}>
+                  <Link href={href}>
                     <Icon />
                     <span>{label}</span>
-                  </SidebarMenuButton>
-                </Link>
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
@@ -70,11 +70,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 <span className="font-medium text-sm truncate">User Name</span>
                 <span className="text-xs text-muted-foreground truncate">user@example.com</span>
              </div>
-             <Link href="/login" className="ml-auto">
-                <Button variant="ghost" size="icon" aria-label="Log out">
+             <Button asChild variant="ghost" size="icon" aria-label="Log out" className="ml-auto">
+                <Link href="/login">
                     <LogOut className="w-4 h-4"/>
-                </Button>
-             </Link>
+                </Link>
+             </Button>
           </div>
         </SidebarFooter>
       </Sidebar>
